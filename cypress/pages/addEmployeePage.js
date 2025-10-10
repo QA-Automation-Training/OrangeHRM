@@ -75,6 +75,7 @@ class AddEmployeePage {
         }
       }
       
+      // Fallback: use the input that comes after the labels
       return cy.get('input.oxd-input').eq(2);
     });
   }
@@ -89,6 +90,7 @@ class AddEmployeePage {
     cy.contains('label', 'Employee Name').parent().next().find('input').type(data.employeeName);
     cy.get('.oxd-autocomplete-option').first().click();
 
+    // Status
     cy.contains('label', 'Status').parent().next().find('.oxd-select-text').click();
     cy.get('[role="option"]').contains(data.status).click();
 
