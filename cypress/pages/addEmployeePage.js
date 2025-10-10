@@ -3,89 +3,141 @@ class AddEmployeePage {
   elements = {
     // Dropdowns and fields
     userRoleDropdown: () => cy.get('.oxd-select-text').eq(0),
-    userRoleOption: (role) => cy.contains('div[role="option"]', role),
+    userRoleOptions: () => cy.get('[role="listbox"]'),
     
     employeeNameInput: () => cy.get('input[placeholder="Type for hints..."]'),
-    employeeNameOption: () => cy.get('.oxd-autocomplete-option').first(),
+    employeeNameDropdown: () => cy.get('.oxd-autocomplete-dropdown'),
+    employeeNameOptions: () => cy.get('.oxd-autocomplete-option'),
     
     statusDropdown: () => cy.get('.oxd-select-text').eq(1),
-    statusOption: (status) => cy.contains('div[role="option"]', status),
+    statusOptions: () => cy.get('[role="listbox"]'),
     
-    usernameInput: () => cy.get('input.oxd-input').eq(1),
+    // Fixed selectors - using more specific attributes
+    usernameInput: () => cy.get('input.oxd-input').eq(2),
     passwordInput: () => cy.get('input[type="password"]').eq(0),
     confirmPasswordInput: () => cy.get('input[type="password"]').eq(1),
     
-    saveButton: () => cy.get('input[type="submit"]'),
+    saveButton: () => cy.get('button[type="submit"]'),
     
     // Error messages
-    requiredError: () => cy.contains('Required'),
-    passwordMismatchError: () => cy.contains('Passwords do not match'),
-    usernameExistsError: () => cy.contains('Already exists')
+    requiredErrors: () => cy.get('.oxd-input-field-error-message'),
+    fieldErrors: () => cy.get('.oxd-input-group__message'),
+    toastMessage: () => cy.get('.oxd-toast-container'),
+    
+    // Alternative selectors for better reliability
+    formInputs: () => cy.get('.oxd-input'),
+    passwordFields: () => cy.get('input[type="password"]')
   };
 
-  // ========== Fill form ==========
+  // ========== Fill form with better error handling ==========
   fillFormWithValidData(data) {
-    // Select User Role
-    this.elements.userRoleDropdown().click({ force: true });
-    cy.wait(500);
-    this.elements.userRoleOption(data.userRole).click({ force: true });
+    cy.log('Filling user form with data:', data);
 
-    // Type Employee Name
-    this.elements.employeeNameInput().clear().type(data.employeeName, { force: true });
-    cy.wait(2000);
-    cy.get('.oxd-autocomplete-dropdown').should('be.visible');
-    this.elements.employeeNameOption().click({ force: true });
+    // Select User Role
+    this.elements.userRoleDropdown().click();
+    cy.get('[role="option"]').contains(data.userRole).click();
+
+    // Type Employee Name with better dropdown handling
+    this.elements.employeeNameInput().clear().type(data.employeeName);
+    
+    // Wait for dropdown and select first option
+    this.elements.employeeNameDropdown().should('be.visible');
+    this.elements.employeeNameOptions().first().click();
 
     // Select Status
-    this.elements.statusDropdown().click({ force: true });
-    cy.wait(500);
-    this.elements.statusOption(data.status).click({ force: true });
+    this.elements.statusDropdown().click();
+    cy.get('[role="option"]').contains(data.status).click();
 
-    // Fill username and passwords
-    this.elements.usernameInput().clear().type(data.username, { force: true });
-    this.elements.passwordInput().clear().type(data.password, { force: true });
-    this.elements.confirmPasswordInput().clear().type(data.confirmPassword, { force: true });
+    // Fill username and passwords with better selectors
+    this.getUsernameInput().clear().type(data.username);
+    this.elements.passwordInput().clear().type(data.password);
+    this.elements.confirmPasswordInput().clear().type(data.confirmPassword);
   }
 
-  // ========== Click Save ==========
+  // ========== More reliable username input selector ==========
+  getUsernameInput() {
+    // Try multiple selector strategies
+    return cy.get('input.oxd-input').then($inputs => {
+      // Find the username input by its position or attributes
+      const inputs = $inputs.toArray();
+      
+      // The username input is typically after employee name input
+      // We'll find it by checking which input doesn't have specific attributes
+      for (let i = 0; i < inputs.length; i++) {
+        const input = inputs[i];
+        const placeholder = input.getAttribute('placeholder');
+        const type = input.getAttribute('type');
+        
+        // Skip password fields and employee name field
+        if (type !== 'password' && placeholder !== 'Type for hints...') {
+          // This is likely the username field
+          return cy.wrap(input);
+        }
+      }
+      
+      return cy.get('input.oxd-input').eq(2);
+    });
+  }
+
+  // ========== Alternative fill method using label-based selectors ==========
+  fillFormByLabels(data) {
+    // User Role
+    cy.contains('label', 'User Role').parent().next().find('.oxd-select-text').click();
+    cy.get('[role="option"]').contains(data.userRole).click();
+
+    // Employee Name
+    cy.contains('label', 'Employee Name').parent().next().find('input').type(data.employeeName);
+    cy.get('.oxd-autocomplete-option').first().click();
+
+    cy.contains('label', 'Status').parent().next().find('.oxd-select-text').click();
+    cy.get('[role="option"]').contains(data.status).click();
+
+    // Username - find by label
+    cy.contains('label', 'Username').parent().next().find('input').type(data.username);
+
+    // Password
+    cy.contains('label', 'Password').parent().next().find('input[type="password"]').type(data.password);
+
+    // Confirm Password
+    cy.contains('label', 'Confirm Password').parent().next().find('input[type="password"]').type(data.confirmPassword);
+  }
+
+  // ========== Click Save with validation ==========
   clickSave() {
-    this.elements.saveButton().should('be.visible').click({ force: true });
-  }
-
-  // ========== Navigate back to users list ==========
-  navigateToUsersList() {
-    cy.contains('Admin').click();
-    cy.wait(2000);
-  }
-
-  // ========== Verify user in list ==========
-  verifyUserInList(username) {
-    cy.wait(2000);
-    // البحث عن المستخدم
-    cy.get('.oxd-input').eq(1).clear().type(username);
-    cy.get('button[type="submit"]').click();
-    cy.wait(2000);
-    
-    // التحقق من ظهوره
-    cy.contains(username, { timeout: 5000 }).should('be.visible');
+    this.elements.saveButton()
+      .should('be.visible')
+      .should('not.be.disabled')
+      .click();
   }
 
   // ========== Verify errors ==========
   verifyRequiredErrors() {
-    this.elements.requiredError().should('be.visible');
+    this.elements.requiredErrors()
+      .should('have.length.at.least', 1)
+      .and('be.visible');
   }
 
   verifyPasswordMismatchError() {
-    this.elements.passwordMismatchError().should('be.visible');
+    cy.contains('Passwords do not match').should('be.visible');
   }
 
   verifyUsernameExistsError() {
-    this.elements.usernameExistsError().should('be.visible');
+    cy.contains('Already exists').should('be.visible');
   }
 
-  // alias
-  fillUserForm(data) {
-    this.fillFormWithValidData(data);
+  verifySuccessMessage() {
+    this.elements.toastMessage()
+      .should('be.visible')
+      .and('contain', 'Successfully Saved');
+  }
+
+  // alias with option to use label-based filling
+  fillUserForm(data, useLabels = true) {
+    if (useLabels) {
+      this.fillFormByLabels(data);
+    } else {
+      this.fillFormWithValidData(data);
+    }
   }
 }
 
