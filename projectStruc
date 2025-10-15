@@ -1,0 +1,99 @@
+cypress-orangehrm-testing/
+│
+├── cypress/
+│   ├── e2e/
+│   │   ├── pages/                 # Page Object Models
+│   │   │   ├── common/
+│   │   │   │   ├── header.page.ts
+│   │   │   │   ├── sidebar.page.ts
+│   │   │   │   └── navigation.page.ts
+│   │   │   ├── auth/
+│   │   │   │   ├── login.page.ts
+│   │   │   │   └── logout.page.ts
+│   │   │   ├── dashboard/
+│   │   │   │   └── dashboard.page.ts
+│   │   │   └── pim/
+│   │   │       ├── add-employee.page.ts
+│   │   │       ├── employee-list.page.ts
+│   │   │       └── employee-details.page.ts
+│   │   ├── specs/
+│   │   │   ├── auth/
+│   │   │   │   ├── login.spec.ts
+│   │   │   │   └── logout.spec.ts
+│   │   │   ├── pim/
+│   │   │   │   ├── add-employee.spec.ts
+│   │   │   │   ├── employee-list.spec.ts
+│   │   │   │   └── employee-search.spec.ts
+│   │   │   ├── dashboard/
+│   │   │   │   └── dashboard.spec.ts
+│   │   │   └── api/               # API Tests
+│   │   │       └── pim-api.spec.ts
+│   │   └── support/
+│   │       ├── commands/          # Organized Commands
+│   │       │   ├── auth.commands.ts
+│   │       │   ├── pim.commands.ts
+│   │       │   ├── ui.commands.ts
+│   │       │   └── api.commands.ts
+│   │       ├── utils/             # Utilities
+│   │       │   ├── helpers.ts
+│   │       │   ├── data-generator.ts
+│   │       │   └── assertions.ts
+│   │       ├── types/             # Type Definitions
+│   │       │   ├── global.d.ts
+│   │       │   ├── api.types.ts
+│   │       │   └── ui.types.ts
+│   │       ├── constants/         # Constants
+│   │       │   ├── selectors.ts
+│   │       │   ├── test-data.ts
+│   │       │   └── endpoints.ts
+│   │       ├── commands.ts        # Main commands export
+│   │       ├── e2e.ts            # Support file
+│   │       └── index.ts          # Barrel export
+│   ├── fixtures/                  # Test Data
+│   │   ├── users/
+│   │   │   ├── admin.json
+│   │   │   ├── ess-user.json
+│   │   │   └── test-users.json
+│   │   ├── employees/
+│   │   │   ├── valid-employee.json
+│   │   │   └── invalid-employee.json
+│   │   └── api/
+│   │       └── api-responses.json
+│   ├── downloads/                # Download Folder
+│   ├── screenshots/             # Screenshots on failure
+│   └── videos/                  # Test recordings
+│
+├── config/                      # Configuration Files
+│   ├── cypress/
+│   │   ├── cypress.dev.json
+│   │   ├── cypress.qa.json
+│   │   └── cypress.prod.json
+│   ├── environment/
+│   │   ├── dev.env.ts
+│   │   ├── qa.env.ts
+│   │   └── prod.env.ts
+│   └── reports/
+│       ├── mochawesome.json
+│       └── html-reporter.json
+│
+├── scripts/                     # Automation Scripts
+│   ├── setup.sh
+│   ├── run-tests.sh
+│   └── generate-report.sh
+│
+├── reports/                     # Test Reports
+│   ├── html/
+│   ├── json/
+│   └── junit/
+│
+├── docs/                        # Documentation
+│   ├── test-strategy.md
+│   ├── setup-guide.md
+│   └── best-practices.md
+│
+├── package.json
+├── cypress.config.ts
+├── tsconfig.json
+├── .gitignore
+├── README.md
+└── .env.example

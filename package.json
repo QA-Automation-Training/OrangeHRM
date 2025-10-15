@@ -1,5 +1,18 @@
 {
+  "name": "traningts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
   "devDependencies": {
-    "cypress": "^15.4.0"
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^24.7.2",
+    "cypress": "^15.4.0",
+    "typescript": "^5.9.3"
   }
 }
