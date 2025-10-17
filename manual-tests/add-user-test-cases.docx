@@ -1,0 +1,34 @@
+Feature: Add User functionality
+  As an Admin
+  I want to add new users to the system
+  So that they can access the application with valid credentials
+
+Scenario: TC-001 - Verify that Admin can successfully add a new user with valid data
+  Given the Admin is logged into the system
+  When the Admin navigates to Admin → User Management → Add User
+  And the Admin fills all required fields with valid data
+  And clicks Save
+  Then the system should create the new user
+  And the new user should appear in the user list
+
+Scenario: TC-002 - Verify that required field validation messages appear when fields are left empty
+Given the Admin is login into the system 
+And the Admin is on the  Add User page 
+When the Admin clicks save  without  filling in the required fields
+Then validation error messages  should  appear below each empty required
+
+Scenario: TC-003 - Verify that system shows error when Password and Confirm Password do not match
+Given the Admin is logged in into the system 
+And the Admin is on  the  Add user  Page 
+When the  Admin  enters  the  password  
+And enters  a different  value  in confirm  Password 
+Then  the  system  should display  an  error  message  indicating that password do  not  match  
+
+
+Scenario: TC-004 - Verify that system prevents adding a user with an existing username
+  Given the Admin is logged into the system
+  And a user with the same username already exists
+  When the Admin navigates to Add User page
+  And fills valid data but uses the existing username
+  And clicks Save
+  Then the system should display an error message saying "Username already exists"

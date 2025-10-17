@@ -1,11 +1,17 @@
 {
-  "devDependencies": {
-    "cypress": "^15.4.0"
-  },
+  "name": "orangehrm-cypress-ts",
+  "version": "1.0.0",
   "scripts": {
-    "start": "react-scripts start",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run",
-    "test": "cypress run"
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test:login": "cypress run --spec cypress/e2e/specs/auth/login.spec.ts"
+  },
+  "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^23.2.1",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.6",
+    "@types/node": "^20.0.0",
+    "cypress": "^15.4.0",
+    "esbuild": "^0.25.11",
+    "typescript": "^5.9.3"
   }
 }

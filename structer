@@ -1,0 +1,102 @@
+cypress-orangehrm-testing/
+│
+├── cypress/
+│   ├── e2e/
+│   │   ├── specs/                       # Test Specs
+│   │   │   ├── auth/
+│   │   │   │   ├── login.spec.ts
+│   │   │   │   ├── logout.spec.ts
+│   │   │   │   └── reset-password.spec.ts
+│   │   │   ├── admin/
+│   │   │   │   ├── add-user.spec.ts
+│   │   │   │   ├── search-user.spec.ts
+│   │   │   │   └── edit-user.spec.ts
+│   │   │   ├── pim/
+│   │   │   │   ├── add-employee.spec.ts
+│   │   │   │   ├── employee-list.spec.ts
+│   │   │   │   ├── update-employee.spec.ts
+│   │   │   │   └── delete-employee.spec.ts
+│   │   │   ├── leave/
+│   │   │   │   ├── apply-leave.spec.ts
+│   │   │   │   ├── approve-leave.spec.ts
+│   │   │   │   └── leave-list.spec.ts
+│   │   │   ├── recruitment/
+│   │   │   │   ├── add-candidate.spec.ts
+│   │   │   │   ├── candidate-list.spec.ts
+│   │   │   │   └── interview.spec.ts
+│   │   │   ├── my-info/
+│   │   │   │   ├── personal-details.spec.ts
+│   │   │   │   ├── contact-details.spec.ts
+│   │   │   │   └── emergency-contacts.spec.ts
+│   │   │   ├── dashboard/
+│   │   │   │   └── dashboard.spec.ts
+│   │   │   └── reports/
+│   │   │       ├── general-reports.spec.ts
+│   │   │       └── export-data.spec.ts
+│   │   │
+│   │   ├── pages/                       # Page Object Models
+│   │   │   ├── auth/
+│   │   │   │   ├── login.page.ts
+│   │   │   │   └── logout.page.ts
+│   │   │   ├── admin/
+│   │   │   │   └── admin.page.ts
+│   │   │   ├── pim/
+│   │   │   │   ├── add-employee.page.ts
+│   │   │   │   └── employee-list.page.ts
+│   │   │   ├── leave/
+│   │   │   │   └── leave.page.ts
+│   │   │   ├── recruitment/
+│   │   │   │   └── recruitment.page.ts
+│   │   │   ├── my-info/
+│   │   │   │   └── my-info.page.ts
+│   │   │   └── dashboard/
+│   │   │       └── dashboard.page.ts
+│   │   │
+│   │   ├── support/
+│   │   │   ├── commands/
+│   │   │   │   ├── auth.commands.ts
+│   │   │   │   ├── pim.commands.ts
+│   │   │   │   ├── ui.commands.ts
+│   │   │   │   └── general.commands.ts
+│   │   │   ├── utils/
+│   │   │   │   ├── helpers.ts
+│   │   │   │   └── data-generator.ts
+│   │   │   ├── constants/
+│   │   │   │   ├── urls.ts
+│   │   │   │   └── selectors.ts
+│   │   │   ├── types/
+│   │   │   │   └── index.d.ts
+│   │   │   ├── commands.ts
+│   │   │   └── e2e.ts
+│   │
+│   ├── fixtures/                        # Test Data
+│   │   ├── users/
+│   │   │   ├── admin.json
+│   │   │   └── test-users.json
+│   │   ├── employees/
+│   │   │   └── employee-data.json
+│   │   └── leave/
+│   │       └── leave-data.json
+│   │
+│   ├── downloads/                       # For file downloads during tests
+│   ├── screenshots/                     # Failure screenshots
+│   └── videos/                          # Recorded videos
+│
+├── config/                              # Configuration Files
+│   ├── cypress.config.ts
+│   └── environments/
+│       ├── dev.env.ts
+│       ├── staging.env.ts
+│       └── prod.env.ts
+│
+├── reports/                             # Test Reports
+│   ├── html/
+│   ├── junit/
+│   └── mochawesome/
+│
+├── logs/                                # Custom logs if needed
+│
+├── package.json
+├── tsconfig.json
+├── .gitignore
+└── README.md
