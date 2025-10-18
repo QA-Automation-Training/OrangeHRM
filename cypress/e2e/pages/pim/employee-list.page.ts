@@ -38,19 +38,25 @@ class EmployeeListPage {
     dropdownOption: () => cy.get('.oxd-select-dropdown'),
 
     includeDropdown: () =>
-  cy.contains('label', 'Include')
-    .closest('.oxd-input-group')
-    .find('.oxd-select-text-input'),
+      cy.contains('label', 'Include')
+        .closest('.oxd-input-group')
+        .find('.oxd-select-text-input'),
 
 
-jobTitleDropdown: () =>
-  cy.contains('label', 'Job Title')
-    .closest('.oxd-input-group')
-    .find('.oxd-select-text-input'),
+    jobTitleDropdown: () =>
+      cy.contains('label', 'Job Title')
+        .closest('.oxd-input-group')
+        .find('.oxd-select-text-input'),
 
 
     searchButton: () => cy.get('button[type="submit"]'),
+    resetButton: () => cy.get('button[type="reset"]'),
 
+    // Table elements - corrected selectors based on your HTML
+    tableBody: () => cy.get('.oxd-table-body'),
+    tableRows: () => cy.get('.oxd-table-card'),
+    tableRow: (index: number) => cy.get('.oxd-table-card').eq(index),
+    noRecordsFound: () => cy.contains('No Records Found'),
 
 
 
@@ -80,27 +86,27 @@ jobTitleDropdown: () =>
 
   }
 
-// This method dynamically selects a dropdown option based on its visible text.
-// We locate the dropdown using its <label> (more stable than using index or order),
-// then click to open it and choose the matching option by content.
-// This approach is flexible and works even if the DOM structure or element order changes.
-   selectEmploymentStatus(status) {
-    this.elements.employmentStatusDropdown().click(); 
-    this.elements.dropdownOption().contains(status).click(); 
+  // This method dynamically selects a dropdown option based on its visible text.
+  // We locate the dropdown using its <label> (more stable than using index or order),
+  // then click to open it and choose the matching option by content.
+  // This approach is flexible and works even if the DOM structure or element order changes.
+  selectEmploymentStatus(status) {
+    this.elements.employmentStatusDropdown().click();
+    this.elements.dropdownOption().contains(status).click();
   }
-selectEmployeeIncludeOption(option) {
-    this.elements.includeDropdown().click(); 
-    this.elements.dropdownOption().contains(option).click(); 
+  selectEmployeeIncludeOption(option) {
+    this.elements.includeDropdown().click();
+    this.elements.dropdownOption().contains(option).click();
   }
 
   selectEmloyeeJobTitle(title) {
-    this.elements.jobTitleDropdown().click(); 
-    this.elements.dropdownOption().contains(title).click(); 
+    this.elements.jobTitleDropdown().click();
+    this.elements.dropdownOption().contains(title).click();
   }
-
-
+   
 
   
+
 }
 
 export default EmployeeListPage;

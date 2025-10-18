@@ -9,11 +9,13 @@ describe("PIM Employee List Page", () => {
   });
 
   it("should search for an employee by name", () => { 
-    employeeListPage.searchEmployeeBYName("John Smith");
+    employeeListPage.searchEmployeeBYName("Shakira Alex Dickinson")
+    .searchEmployeeBYName("John Smith")
+    .verifySearchResultsContain('John Smith');
   });
 
   it("should search for an employee by ID", () => { 
-    employeeListPage.searchEmployeeBYId("12345");
+    employeeListPage.searchEmployeeBYId("12345").verifySearchResultsContain('12345');
   });
 
   it('should filter employees by employment status', () => {
@@ -22,8 +24,12 @@ describe("PIM Employee List Page", () => {
         employeeListPage.selectEmploymentStatus(status);
         // Optional: verify results
         cy.get('.oxd-table-row').should('exist');
+
       });
+
     });
+
+
   });
 
   it('should filter employees by include option', () => {
@@ -41,6 +47,7 @@ describe("PIM Employee List Page", () => {
                 cy.get('.oxd-table-row').should('exist');
             });
         });
+
     });
 
 });
