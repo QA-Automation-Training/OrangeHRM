@@ -1,46 +1,31 @@
-name: Run Cypress Tests
+name: Cypress Tests
 
 on:
   push:
-    branches:
-      - main
-      - FatimaFixes
+    branches: [main, FatimaFixes]
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      - name: Cache node modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
       - name: Install dependencies
-        run: npm install
-
-      - name: Install Cypress binary
-        run: npx cypress install
+        run: npm ci
 
       - name: Run Cypress tests
-        run: |
-          chmod +x node_modules/.bin/cypress
-          npx cypress verify
-          npx cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          browser: chrome
 
       - name: Upload Cypress artifacts (videos/screenshots)
         if: failure()
