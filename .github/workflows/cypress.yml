@@ -3,11 +3,11 @@ name: Run Cypress Tests
 on:
   push:
     branches:
-      - main         
-      - FatimaFixes  
+      - main
+      - FatimaFixes
   pull_request:
     branches:
-      - main         
+      - main
 
 jobs:
   cypress-run:
@@ -34,7 +34,9 @@ jobs:
         run: npm install
 
       - name: Run Cypress tests
-        run: npx cypress run
+        run: |
+          chmod +x node_modules/.bin/cypress
+          npx cypress run
 
       - name: Upload Cypress artifacts (videos/screenshots)
         if: failure()
