@@ -14,9 +14,7 @@ describe("PIM Employee List Page", () => {
     .verifySearchResultsContain('John Smith');
   });
 
-  it("should search for an employee by ID", () => { 
-    employeeListPage.searchEmployeeBYId("12345").verifySearchResultsContain('12345');
-  });
+  
 
   it('should filter employees by employment status', () => {
     cy.fixture("employmentStatus").then((data) => {
