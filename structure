@@ -1,0 +1,75 @@
+cypress-orangehrm-testing/
+├── cypress/
+│   ├── e2e/
+│   │   ├── specs/                       # Test Specs
+│   │   │   ├── auth/
+│   │   │   │   ├── login.spec.ts        # UI Test
+│   │   │   │   ├── login.api.spec.ts    # API Test ← SAME MODULE
+│   │   │   │   ├── logout.spec.ts
+│   │   │   │   └── reset-password.spec.ts
+│   │   │   ├── pim/
+│   │   │   │   ├── add-employee.spec.ts      # UI Test
+│   │   │   │   ├── add-employee.api.spec.ts  # API Test ← SAME MODULE
+│   │   │   │   ├── employee-list.spec.ts
+│   │   │   │   ├── employee-list.api.spec.ts # API Test
+│   │   │   │   ├── update-employee.spec.ts
+│   │   │   │   └── delete-employee.spec.ts
+│   │   │   ├── leave/
+│   │   │   │   ├── apply-leave.spec.ts       # UI Test
+│   │   │   │   ├── apply-leave.api.spec.ts   # API Test ← SAME MODULE
+│   │   │   │   ├── approve-leave.spec.ts
+│   │   │   │   ├── approve-leave.api.spec.ts # API Test
+│   │   │   │   └── leave-list.spec.ts
+│   │   │   └── ... (other modules)
+│   │   │
+│   │   ├── pages/                       # Page Object Models (UI Only)
+│   │   │   ├── auth/
+│   │   │   │   ├── login.page.ts
+│   │   │   │   └── logout.page.ts
+│   │   │   ├── pim/
+│   │   │   │   ├── add-employee.page.ts
+│   │   │   │   └── employee-list.page.ts
+│   │   │   ├── leave/
+│   │   │   │   └── leave.page.ts
+│   │   │   └── ... (other modules)
+│   │   │
+│   │   ├── support/
+│   │   │   ├── commands/
+│   │   │   │   ├── auth.commands.ts     # UI Commands
+│   │   │   │   ├── auth.api.commands.ts # API Commands ← SEPARATE
+│   │   │   │   ├── pim.commands.ts      # UI Commands
+│   │   │   │   ├── pim.api.commands.ts  # API Commands
+│   │   │   │   ├── leave.commands.ts    # UI Commands
+│   │   │   │   ├── leave.api.commands.ts# API Commands
+│   │   │   │   └── general.commands.ts
+│   │   │   ├── utils/
+│   │   │   │   ├── data-generator.ts    # SHARED - Both UI & API
+│   │   │   │   ├── api-helpers.ts       # API Only
+│   │   │   │   └── ui-helpers.ts        # UI Only
+│   │   │   ├── constants/
+│   │   │   │   ├── urls.ts              # UI URLs
+│   │   │   │   ├── selectors.ts         # UI Selectors
+│   │   │   │   └── endpoints.ts         # API Endpoints ← NEW
+│   │   │   ├── types/
+│   │   │   │   └── index.d.ts           # SHARED Types
+│   │   │   ├── commands.ts              # Main commands file
+│   │   │   └── e2e.ts                   # Support file
+│   │
+│   ├── fixtures/                        # Test Data
+│   │   ├── users/
+│   │   │   ├── admin.json
+│   │   │   └── test-users.json
+│   │   ├── employees/
+│   │   │   └── employee-data.json
+│   │   ├── leave/
+│   │   │   └── leave-data.json
+│   │   └── api/                         ← NEW: API Test Data
+│   │       ├── auth/
+│   │       │   ├── login-valid.json
+│   │       │   └── login-invalid.json
+│   │       ├── pim/
+│   │       │   ├── create-employee.json
+│   │       │   └── update-employee.json
+│   │       └── leave/
+│   │           ├── entitlement.json
+│   │           └── application.json
