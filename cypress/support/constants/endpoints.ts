@@ -1,19 +1,21 @@
-// /File: cypress/e2e/support/constants/endpoints.ts
-
-// Purpose: Store all API URLs
-// Constants to create:
-
-// EMPLOYEES_ENDPOINT - URL for adding employees
-
-// LEAVE_ENTITLEMENT_ENDPOINT - URL for assigning leave
-
-// LEAVE_REQUEST_ENDPOINT - URL for applying leave
-
-// LEAVE_APPROVAL_ENDPOINT - URL for approving leave
-
-// What you'll TEST first:
-
-// Import and use these constants in a simple test
-
-// Verify URLs are correct
-
+/**
+ * ============================================================
+ * 🔧 FILE: endpoints.ts
+ * PURPOSE:
+ * - Central file for storing all backend API endpoint URLs.
+ * - Prevents hardcoding URLs inside test files.
+ *
+ * ============================================================
+ * 🧠 EXAMPLES:
+ * export const LOGIN_ENDPOINT = '/web/index.php/api/v2/auth/login';
+ * export const EMPLOYEES_ENDPOINT = '/web/index.php/api/v2/pim/employees';
+ * export const LEAVE_ENTITLEMENT_ENDPOINT = '/web/index.php/api/v2/leave/entitlements';
+ * export const LEAVE_REQUEST_ENDPOINT = '/web/index.php/api/v2/leave/requests';
+ * export const LEAVE_APPROVAL_ENDPOINT = '/web/index.php/api/v2/leave/requests/action';
+ *
+ * ============================================================
+ * 🧰 WHAT YOU NEED TO DO:
+ * ✅ Add missing endpoints for authentication, employees, and leave APIs.
+ * ✅ Import them in api-helpers.ts when making requests.
+ * ============================================================
+ */
