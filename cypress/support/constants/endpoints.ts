@@ -1,17 +1,11 @@
 /**
  * ============================================================
- * 🔧 FILE: endpoints.ts
+ * FILE: endpoints.ts
  * PURPOSE:
  * - Central file for storing all backend API endpoint URLs.
  * - Prevents hardcoding URLs inside test files.
  *
  * ============================================================
- * 🧠 EXAMPLES:
- * export const LOGIN_ENDPOINT = '/web/index.php/api/v2/auth/login';
- * export const EMPLOYEES_ENDPOINT = '/web/index.php/api/v2/pim/employees';
- * export const LEAVE_ENTITLEMENT_ENDPOINT = '/web/index.php/api/v2/leave/entitlements';
- * export const LEAVE_REQUEST_ENDPOINT = '/web/index.php/api/v2/leave/requests';
- * export const LEAVE_APPROVAL_ENDPOINT = '/web/index.php/api/v2/leave/requests/action';
  *
  * ============================================================
  * 🧰 WHAT YOU NEED TO DO:
@@ -19,3 +13,9 @@
  * ✅ Import them in api-helpers.ts when making requests.
  * ============================================================
  */
+export const LOGIN_ENDPOINT = '/web/index.php/api/v2/auth/login';
+export const EMPLOYEES_ENDPOINT = '/web/index.php/api/v2/pim/employees';
+export const LEAVE_ENTITLEMENT_ENDPOINT = '/web/index.php/api/v2/leave/entitlements';
+export const LEAVE_REQUEST_ENDPOINT = '/web/index.php/api/v2/leave/requests';
+export const LEAVE_APPROVAL_ENDPOINT = '/web/index.php/api/v2/leave/requests/action';
+
