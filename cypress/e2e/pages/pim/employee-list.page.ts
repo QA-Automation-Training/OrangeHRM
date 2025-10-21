@@ -9,7 +9,6 @@ class EmployeeListPage {
     // '.oxd-table-filter-header-options .--toggle button' is the button that opens the filter area
     // This ensures all input fields inside the filter become visible and interactable
     // This prevents the test from failing if the element is not yet loaded
-
     openFilttersArea: () => cy.get('.oxd-table-filter-area', { timeout: 5000 })
       .should('exist')
       .then($el => {

@@ -17,6 +17,8 @@
 
 // cypress/e2e/support/e2e.ts
 import './commands';
+import './commands/auth.api.commands';
+
 
 // Global beforeEach hook
 beforeEach(function () {

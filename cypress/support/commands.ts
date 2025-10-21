@@ -35,10 +35,3 @@ Cypress.Commands.add('loginToOrangeHRM', () => {
   cy.url().should('include', '/dashboard');
 });
 
-// TODO: Add loginToOrangeHRM command
-// - Use cy.visit, fill username/password, click login
-// - Optionally use cy.session for speed
-
-// TODO: Add generateEmployeeData command
-// - Return an object with firstName, lastName, employeeId, username, password
-// - Use timestamp or random to avoid duplicates
