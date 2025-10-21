@@ -33,25 +33,7 @@ cypress-orangehrm-testing/
 │   │   │   │   └── leave.page.ts
 │   │   │   └── ... (other modules)
 │   │   │
-│   │   ├── support/
-│   │   │   ├── commands/
-│   │   │   │   ├── auth.commands.ts     # UI Commands
-│   │   │   │   ├── auth.api.commands.ts # API Commands ← SEPARATE
-│   │   │   │   ├── pim.commands.ts      # UI Commands
-│   │   │   │   ├── pim.api.commands.ts  # API Commands
-│   │   │   │   ├── leave.commands.ts    # UI Commands
-│   │   │   │   ├── leave.api.commands.ts# API Commands
-│   │   │   │   └── general.commands.ts
-│   │   │   ├── utils/
-│   │   │   │   ├── data-generator.ts    # SHARED - Both UI & API
-│   │   │   │   ├── api-helpers.ts       # API Only
-│   │   │   │   └── ui-helpers.ts        # UI Only
-│   │   │   ├── constants/
-│   │   │   │   ├── urls.ts              # UI URLs
-│   │   │   │   ├── selectors.ts         # UI Selectors
-│   │   │   │   └── endpoints.ts         # API Endpoints ← NEW
-│   │   │   ├── types/
-│   │   │   │   └── index.d.ts           # SHARED Types
+│   │           # SHARED Types
 │   │   │   ├── commands.ts              # Main commands file
 │   │   │   └── e2e.ts                   # Support file
 │   │

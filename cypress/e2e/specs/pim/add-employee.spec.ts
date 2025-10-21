@@ -40,7 +40,6 @@ describe('PIM - Add Employee Basic Smoke Test', () => {
       'Enabled'
     );
 
-    // Assertions for login details
     addEmployeePage.elements.usernameInput().should(
       'have.value',
       `${employee.firstName.toLowerCase()}.${employee.lastName.toLowerCase()}`

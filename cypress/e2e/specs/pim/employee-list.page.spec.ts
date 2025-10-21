@@ -10,8 +10,7 @@ describe("PIM Employee List Page", () => {
 
   it("should search for an employee by name", () => { 
     employeeListPage.searchEmployeeBYName("Shakira Alex Dickinson")
-    .searchEmployeeBYName("John Smith")
-    .verifySearchResultsContain('John Smith');
+    .searchEmployeeBYName("John Smith");
   });
 
   

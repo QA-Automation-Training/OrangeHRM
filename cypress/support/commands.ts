@@ -25,6 +25,8 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 // Custom command for quick login
 // Custom command for quick login
+
+
 Cypress.Commands.add('loginToOrangeHRM', () => {
   cy.visit('/web/index.php/auth/login');
   cy.get('input[name="username"]').type('Admin');
