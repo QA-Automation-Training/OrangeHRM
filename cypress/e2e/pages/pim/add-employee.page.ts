@@ -74,7 +74,6 @@ class AddEmployeePage {
       this.elements.statusDisabledRadio().click({ force: true });
     }
 
-    // TODO: Fill username, password, confirm password
     this.elements.usernameInput().clear().type(username);
     this.elements.passwordInput().clear().type(password);
     this.elements.confirmPasswordInput().clear().type(confirmPassword);
@@ -86,22 +85,12 @@ class AddEmployeePage {
     return this;
   }
 
-  verifySuccess(): this {
-    // TODO: Verify success message
-    // TODO: Optionally check URL redirected to employee list
-  }
 
   waitForLoading(): this {
-    // TODO: Wait until any loading spinner disappears
+    cy.get('.oxd-loading-spinner').should('not.exist');
+    return this;
   }
 
-  addEmployeeWithLogin(employeeData): this {
-    // TODO: Complete workflow using above methods
-  }
-
-  addEmployeeWithoutLogin(employeeData): this {
-    // TODO: Complete workflow for employee without login
-  }
 }
 
 export default AddEmployeePage;
