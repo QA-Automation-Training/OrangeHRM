@@ -23,6 +23,30 @@ class APIsHelpers {
   }
 
   /**
+   * creat n number of employees
+   * @param {IEmployeeInfo} employeeInfo 
+   * @param {number []} employeeIds 
+   * @param {number} count 
+   * @returns 
+   */
+  static createMultipleEmployees(employeeInfo: IEmployeeInfo, employeeIds: number[], count: number = 1):
+    Cypress.Chainable<IEmployeeInfo[]> {
+    const creationPromises: Array<Promise<IEmployeeInfo>> = [];
+
+    for (let i = 0; i < count; i++) {
+      const promise = new Promise<IEmployeeInfo>((resolve) => {
+        this.createEmployeeViaAPI(employeeInfo).then((response) => {
+          const empData = response.body.data;
+          employeeIds.push(Number(empData.empNumber));
+          resolve(empData);
+        })
+      });
+      creationPromises.push(promise);
+    }
+    return cy.wrap(Promise.all(creationPromises));
+  }
+
+  /**
   * add username and password for the employee
   * @param {IEmployeeInfo} employeeInfo
   * @param {number} empNumber
@@ -42,6 +66,25 @@ class APIsHelpers {
         },
       };
     });
+  }
+
+  /**
+   * create users for each employee
+   * @param {IEmployeeInfo} employeeInfo 
+   * @param {number []} employeeIds 
+   * @returns 
+   */
+  static createUsersForEachEmployee(
+    employees: IEmployeeInfo[]
+  ): Cypress.Chainable<Array<{ username: string; password: string }>> {
+    const creationPromises = employees.map((emp) => {
+      return new Promise<{ username: string; password: string }>((resolve) => {
+        this.createUserViaAPI(emp, emp.empNumber).then((res) => {
+          resolve(res.credentials);
+        });
+      });
+    });
+    return cy.wrap(Promise.all(creationPromises));
   }
 
   /**
@@ -91,6 +134,26 @@ class APIsHelpers {
     ).then((response) => {
       return response;
     });
+  }
+
+  /**
+   * add leave entitlements for each employee
+   * @param {ILeaveRequestData} leavePageInfo 
+   * @param {number[]} empNumbers 
+   * @param {number} leaveTypeId 
+   * @returns 
+   */
+  static addLeaveEntitlementsForEachEmployee(leavePageInfo: ILeaveRequestData,
+    empNumbers: number[],
+    leaveTypeId: number): Cypress.Chainable<any> {
+
+    let chain: Cypress.Chainable<any> = cy.wrap(null);
+    empNumbers.forEach((empNumber) => {
+      chain = chain.then(() => {
+        return this.addLeaveEntitlements(leavePageInfo, empNumber, leaveTypeId);
+      })
+    });
+    return chain;
   }
 }
 export { APIsHelpers }
