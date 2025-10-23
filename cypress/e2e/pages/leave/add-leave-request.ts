@@ -1,0 +1,4 @@
+class LeavePage {
+
+}
+export { LeavePage }
