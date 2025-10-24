@@ -24,11 +24,11 @@ describe("Leave page test cases", () => {
 
   before(() => {
     // Initialize fixtures
-    cy.fixture("leave-page-mock").then((leavePageData) => {
+    cy.fixture("leave/leave-page-mock").then((leavePageData) => {
       leavePageInfo = leavePageData;
     });
 
-    cy.fixture("employee-page-mock").then((addEmployeeData) => {
+    cy.fixture("pim/employmentStatus").then((addEmployeeData) => {
       employeeMockData = addEmployeeData;
       employeeInfo = structuredClone(employeeMockData);
     });

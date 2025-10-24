@@ -1,4 +1,4 @@
-import { EMPLOYEES_ENDPOINT, HTTP_METHODS, LEAVE_ENTITLEMENT_ENDPOINT, LEAVE_TYPES_ENDPOINT, USERS_ENDPOINT } from "../constants/endpoints";
+import { ADD_LEAVE_ENTITLEMENT_ENDPOINT, EMPLOYEES_ENDPOINT, HTTP_METHODS, LEAVE_ENTITLEMENT_ENDPOINT, LEAVE_TYPES_ENDPOINT, USERS_ENDPOINT } from "../constants/endpoints";
 import { CommonHelper } from "../helpers/common-helper";
 import { LeaveInitializer } from "../initializers/leave-page/leave-page-initializer";
 import { PIMInitializer } from "../initializers/pim-page/pim-page-initializer";
@@ -129,7 +129,7 @@ class APIsHelpers {
     );
     return CommonHelper.sendAPIRequest(
       HTTP_METHODS.POST,
-      LEAVE_ENTITLEMENT_ENDPOINT,
+      ADD_LEAVE_ENTITLEMENT_ENDPOINT,
       payload
     ).then((response) => {
       return response;

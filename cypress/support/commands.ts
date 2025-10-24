@@ -38,8 +38,8 @@ declare global {
 
 Cypress.Commands.add('loginToOrangeHRM', (username = "admin", password = "admin123") => {
   cy.visit('/web/index.php/auth/login');
-  cy.get('input[name="username"]').type('Admin');
-  cy.get('input[name="password"]').type('admin123');
+  cy.get('input[name="username"]').type(username);
+  cy.get('input[name="password"]').type(password);
   cy.get('button.orangehrm-login-button').click();
   cy.url().should('include', '/dashboard');
 });
@@ -48,10 +48,3 @@ Cypress.Commands.add("logout", () => {
   cy.get(`.oxd-userdropdown-name`).click();
   cy.get(`.oxd-dropdown-menu`).contains('Logout').click();
 });
-// TODO: Add loginToOrangeHRM command
-// - Use cy.visit, fill username/password, click login
-// - Optionally use cy.session for speed
-
-// TODO: Add generateEmployeeData command
-// - Return an object with firstName, lastName, employeeId, username, password
-// - Use timestamp or random to avoid duplicates
