@@ -43,7 +43,7 @@ describe("Leave page test cases", () => {
 
     cy.loginToOrangeHRM();
 
-    APIsHelpers.createMultipleEmployees(employeeInfo, employeeIds, 5).then((employees) => {
+    APIsHelpers.createMultipleEmployees(employeeInfo, employeeIds, 2).then((employees) => {
       createdEmployees.push(...employees);
       const empNumbers = employees.map((e) => e.empNumber);
 
