@@ -85,22 +85,13 @@ class AddEmployeePage {
     return this;
   }
 
-<<<<<<< HEAD
- 
-  waitForLoading(): this {
-    // TODO: Wait until any loading spinner disappears
-=======
 
   waitForLoading(): this {
->>>>>>> origin/feature/leave-page/waed
     cy.get('.oxd-loading-spinner').should('not.exist');
     return this;
   }
 
-<<<<<<< HEAD
-  
-=======
->>>>>>> origin/feature/leave-page/waed
+
 }
 
 export default AddEmployeePage;
