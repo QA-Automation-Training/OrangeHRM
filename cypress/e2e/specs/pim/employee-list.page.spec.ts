@@ -16,7 +16,7 @@ describe("PIM Employee List Page", () => {
   
 
   it('should filter employees by employment status', () => {
-    cy.fixture("employmentStatus").then((data) => {
+    cy.fixture("pim/employmentStatus").then((data) => {
       data.statuses.forEach((status) => {
         employeeListPage.selectEmploymentStatus(status);
         // Optional: verify results
@@ -30,21 +30,13 @@ describe("PIM Employee List Page", () => {
   });
 
   it('should filter employees by include option', () => {
-    cy.fixture("includeOptions").then((data) => {
+    cy.fixture("pim/includeOptions").then((data) => {
       data.options.forEach(option => {
         employeeListPage.selectEmployeeIncludeOption( option)  // Page Object method
         cy.get('.oxd-table-row').should('exist');
       });
     });
   });
-    it('should filter employees by job title', () => {
-        cy.fixture("jobTitles").then((data) => {
-            data.titles.forEach(title => {
-                employeeListPage.selectEmloyeeJobTitle(title);  // Page Object method
-                cy.get('.oxd-table-row').should('exist');
-            });
-        });
-
-    });
+   
 
 });

@@ -74,7 +74,6 @@ class AddEmployeePage {
       this.elements.statusDisabledRadio().click({ force: true });
     }
 
-    // TODO: Fill username, password, confirm password
     this.elements.usernameInput().clear().type(username);
     this.elements.passwordInput().clear().type(password);
     this.elements.confirmPasswordInput().clear().type(confirmPassword);
@@ -86,14 +85,22 @@ class AddEmployeePage {
     return this;
   }
 
+<<<<<<< HEAD
  
   waitForLoading(): this {
     // TODO: Wait until any loading spinner disappears
+=======
+
+  waitForLoading(): this {
+>>>>>>> origin/feature/leave-page/waed
     cy.get('.oxd-loading-spinner').should('not.exist');
     return this;
   }
 
+<<<<<<< HEAD
   
+=======
+>>>>>>> origin/feature/leave-page/waed
 }
 
 export default AddEmployeePage;
