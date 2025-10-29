@@ -25,6 +25,7 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 // Custom command for quick login
 // Custom command for quick login
+// commands.ts
 export { };
 
 declare global {
@@ -45,6 +46,6 @@ Cypress.Commands.add('loginToOrangeHRM', (username = "admin", password = "admin1
 });
 
 Cypress.Commands.add("logout", () => {
-  cy.get(`.oxd-userdropdown-name`).click();
-  cy.get(`.oxd-dropdown-menu`).contains('Logout').click();
+  cy.get('.oxd-userdropdown-name').click();
+  cy.get('.oxd-dropdown-menu').contains('Logout').click();
 });

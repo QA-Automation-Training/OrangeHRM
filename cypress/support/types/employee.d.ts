@@ -1,3 +1,4 @@
+// employee.d.ts
 export interface IEmployeeInfo {
   firstName: string;
   middleName: string;
@@ -6,5 +7,5 @@ export interface IEmployeeInfo {
   empNumber: number;
   userName: string;
   password: string;
-  status: true;
+  status: boolean; // Changed from 'true' to 'boolean'
 }

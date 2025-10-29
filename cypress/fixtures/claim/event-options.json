@@ -1,0 +1,13 @@
+{
+  "events": [
+    "Travel Expense",
+    "Medical Reimbursement",
+    "Accommodation",
+    "Meal Allowance",
+    "Transportation"
+  ],
+  "count": 5,
+  "lastUpdated": "2025-10-29T04:00:00.000Z",
+  "source": "default_data",
+  "note": "Using default events as no events were found in the system"
+}
