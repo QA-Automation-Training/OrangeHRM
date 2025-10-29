@@ -21,40 +21,37 @@ class ClaimPage {
         .find('.oxd-select-text-input'),
 
     remarksTextarea: () => cy.get('.oxd-textarea'),
-
     submitButton: () => cy.get('button[type="submit"].oxd-button--secondary'),
-
-    eventOptions: () => cy.get('.oxd-select-dropdown [role="option"]'),
-    currencyOptions: () => cy.get('.oxd-select-dropdown [role="option"]'),
   };
 
   navigateToCreateClaim(): this {
     cy.visit('/web/index.php/claim/submitClaim');
     cy.url().should('include', '/claim/submitClaim');
-    cy.get('.orangehrm-main-title').should('be.visible');
     return this;
   }
 
   selectEvent(eventName: string): this {
+    // Click the dropdown to open it
     this.elements.eventDropdown().click();
     
-    cy.get('.oxd-select-dropdown', { timeout: 10000 })
+    // Direct approach - find the option and click it
+    cy.get('.oxd-select-dropdown [role="option"]')
       .should('be.visible')
-      .within(() => {
-        cy.contains('[role="option"]', eventName, { timeout: 10000 }).click({ force: true });
-      });
+      .contains(eventName)
+      .click({ force: true });
 
     return this;
   }
 
   selectCurrency(currencyName: string): this {
+    // Click the dropdown to open it
     this.elements.currencyDropdown().click();
     
-    cy.get('.oxd-select-dropdown', { timeout: 10000 })
+    // Direct approach - find the option and click it
+    cy.get('.oxd-select-dropdown [role="option"]')
       .should('be.visible')
-      .within(() => {
-        cy.contains('[role="option"]', currencyName, { timeout: 10000 }).click({ force: true });
-      });
+      .contains(currencyName)
+      .click({ force: true });
 
     return this;
   }

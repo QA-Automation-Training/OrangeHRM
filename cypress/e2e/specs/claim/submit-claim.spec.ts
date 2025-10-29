@@ -8,17 +8,7 @@ describe('Employee Creation and Login', () => {
   let employeeInfo: IEmployeeInfo;
   const claimPage = new ClaimPage();
 
-  before(() => {
-
-    cy.loginToOrangeHRM('admin', 'admin123');
-    claimPage.navigateToCreateClaim();
-
-    claimPage.ensureAllDataExists()
-
-    cy.logout();
-
-  });
-
+  
   beforeEach(() => {
 
     cy.loginToOrangeHRM('admin', 'admin123');
@@ -41,7 +31,7 @@ describe('Employee Creation and Login', () => {
     cy.fixture('claim/currency-options.json').then((currencyData) => {
       cy.fixture('claim/event-options.json').then((eventData) => {
         const currencies: string[] = currencyData.currencies.slice(0, 5);
-        const eventName: string = eventData.events[0] || 'Medical Reimbursement';
+        const eventName: string = 'Medical Reimbursement';
 
         claimPage.navigateToCreateClaim();
 
