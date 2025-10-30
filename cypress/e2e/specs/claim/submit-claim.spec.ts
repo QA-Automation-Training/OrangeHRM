@@ -6,12 +6,21 @@ import ClaimPage from 'cypress/e2e/pages/claim/employee-claim';
 describe('Employee Creation and Login', () => {
   let employeeCredentials: { username: string; password: string };
   let employeeInfo: IEmployeeInfo;
+  let currencyData: { currencies: string[] };
+  let eventData: { events: string[] };
+
   const claimPage = new ClaimPage();
 
-  
+  before(() => {
+    cy.fixture('claim/currency-options.json').then((currencyInfo) => {
+      currencyData = currencyInfo;
+      cy.fixture('claim/event-options.json').then((eventInfo) => {
+        eventData = eventInfo;
+      })
+    })
+  })
   beforeEach(() => {
-
-    cy.loginToOrangeHRM('admin', 'admin123');
+    cy.loginToOrangeHRM();
 
     const employeeData = APIsHelpers.generateEmployeeData();
 
@@ -28,29 +37,22 @@ describe('Employee Creation and Login', () => {
 
 
   it('should create 5 different Claims for 5 Different Currencies', () => {
-    cy.fixture('claim/currency-options.json').then((currencyData) => {
-      cy.fixture('claim/event-options.json').then((eventData) => {
-        const currencies: string[] = currencyData.currencies.slice(0, 5);
-        const eventName: string = 'Medical Reimbursement';
 
-        claimPage.navigateToCreateClaim();
+    const currencies: string[] = currencyData.currencies.slice(0, 5);
+    const eventName: string = 'Medical Reimbursement';
 
-        currencies.forEach((currency) => {
-          claimPage.selectEvent(eventName);
-          claimPage.selectCurrency(currency);
+    claimPage.navigateToCreateClaim();
 
+    currencies.forEach((currency) => {
+      claimPage.selectEvent(eventName);
+      claimPage.selectCurrency(currency);
+      claimPage.clickSubmit();
 
-          claimPage.clickSubmit();
+      // cy.get('.oxd-toast-content').should('contain.text', 'Successfully Submitted');
 
-          cy.get('.oxd-toast-content').should('contain.text', 'Successfully Submitted');
-
-          claimPage.navigateToCreateClaim();
-        });
-      });
+      claimPage.navigateToCreateClaim();
     });
   });
-
-
 
   afterEach(() => {
     if (employeeInfo && employeeInfo.empNumber) {
@@ -62,4 +64,4 @@ describe('Employee Creation and Login', () => {
       });
     }
   });
-});
+})

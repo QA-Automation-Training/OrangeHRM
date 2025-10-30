@@ -1,5 +1,5 @@
 // api-helpers.ts
-import { EMPLOYEES_ENDPOINT, USERS_ENDPOINT } from "../constants/endpoints";
+import { EMPLOYEES_ENDPOINT, HTTP_METHODS, USERS_ENDPOINT } from "../constants/endpoints";
 import { CommonHelper } from "../helpers/common-helper";
 import { PIMInitializer } from "../initializers/pim-page/pim-page-initializer";
 import { IEmployeeInfo } from "../types/employee";
@@ -15,7 +15,7 @@ class APIsHelpers {
     // Generate properly formatted payload using PIMInitializer
     const payload = PIMInitializer.initializerEmployeePayload(employeeInfo);
     
-    return CommonHelper.sendAPIRequest("POST", EMPLOYEES_ENDPOINT, payload)
+    return CommonHelper.sendAPIRequest(HTTP_METHODS.POST, EMPLOYEES_ENDPOINT, payload)
       .then((response) => {
         if (response.status !== 200 && response.status !== 201) {
           throw new Error(`Failed to create employee: ${response.status}`);
@@ -37,7 +37,7 @@ class APIsHelpers {
     const payload = PIMInitializer.initializerUserPayload(employeeInfo);
     
     // Send POST request to users endpoint with employee number
-    return CommonHelper.sendAPIRequest("POST", USERS_ENDPOINT, {
+    return CommonHelper.sendAPIRequest(HTTP_METHODS.POST, USERS_ENDPOINT, {
       ...payload,
       empNumber,
     }).then((response) => {

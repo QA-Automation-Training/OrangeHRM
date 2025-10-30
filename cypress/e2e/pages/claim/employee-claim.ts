@@ -33,13 +33,11 @@ class ClaimPage {
   selectEvent(eventName: string): this {
     // Click the dropdown to open it
     this.elements.eventDropdown().click();
-    
-    // Direct approach - find the option and click it
-    cy.get('.oxd-select-dropdown [role="option"]')
-      .should('be.visible')
-      .contains(eventName)
-      .click({ force: true });
 
+    // Select the matching event option
+    cy.get(".oxd-select-dropdown")
+      .contains(eventName)
+      .click();
     return this;
   }
 
