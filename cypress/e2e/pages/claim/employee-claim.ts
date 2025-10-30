@@ -44,7 +44,7 @@ class ClaimPage {
   selectCurrency(currencyName: string): this {
     // Click the dropdown to open it
     this.elements.currencyDropdown().click();
-    
+
     // Direct approach - find the option and click it
     cy.get('.oxd-select-dropdown [role="option"]')
       .should('be.visible')
@@ -81,6 +81,55 @@ class ClaimPage {
         }
       });
 
+    return this;
+  }
+
+  addExpense(expenseType: string): this {
+    this.clickAdd();
+    this.selectExpenseType(expenseType);
+    this.selectDate("2027-12-07");
+    this.enterAmount("1000");
+    this.clickSave();
+    return this;
+  }
+
+  clickAdd(): this {
+    cy.get("button").contains("Add").eq(0).click();
+    return this;
+  }
+
+  selectExpenseType(expenseType: string): this {
+    cy.contains("label", "Expense Type")
+      .parents(".oxd-input-group")
+      .find(".oxd-select-text")
+      .click();
+    cy.get(".oxd-select-dropdown")
+      .contains(expenseType)
+      .click();
+    return this;
+  }
+
+  selectDate(date: string): this {
+    cy.get("input[placeholder='yyyy-dd-mm']")
+      .eq(0)
+      .should('be.visible')
+      .clear()
+      .type(date);
+    cy.get(".--close").should('be.visible').click();
+    return this;
+  }
+
+  enterAmount(amount: string): this {
+    cy.contains("label", "Amount")
+      .parents(".oxd-input-group")
+      .find("input")
+      .clear()
+      .type(amount);
+    return this;
+  }
+
+  clickSave(): this {
+    cy.get(`button[type='submit']`).eq(0).contains("Save").click();
     return this;
   }
 }

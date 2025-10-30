@@ -8,17 +8,24 @@ describe('Employee Creation and Login', () => {
   let employeeInfo: IEmployeeInfo;
   let currencyData: { currencies: string[] };
   let eventData: { events: string[] };
+  let expenseTypeData: { expenseTypes: string[] };
 
   const claimPage = new ClaimPage();
 
   before(() => {
     cy.fixture('claim/currency-options.json').then((currencyInfo) => {
       currencyData = currencyInfo;
-      cy.fixture('claim/event-options.json').then((eventInfo) => {
-        eventData = eventInfo;
-      })
+    })
+
+    cy.fixture('claim/event-options.json').then((eventInfo) => {
+      eventData = eventInfo;
+    })
+
+    cy.fixture('claim/expense-type.json').then((expenseTypeInfo) => {
+      expenseTypeData = expenseTypeInfo;
     })
   })
+
   beforeEach(() => {
     cy.loginToOrangeHRM();
 
@@ -36,17 +43,21 @@ describe('Employee Creation and Login', () => {
   });
 
 
-  it('should create 5 different Claims for 5 Different Currencies', () => {
+  it('should create 3 different Claims for 3 Different Currencies', () => {
 
-    const currencies: string[] = currencyData.currencies.slice(0, 5);
+    const currencies: string[] = currencyData.currencies.slice(0, 3);
+    const expenseTypes: string[] = expenseTypeData.expenseTypes.slice(0, 3);
     const eventName: string = 'Medical Reimbursement';
 
     claimPage.navigateToCreateClaim();
 
-    currencies.forEach((currency) => {
+    currencies.forEach((currency, index) => {
+      const expenseType = expenseTypes[index];
+
       claimPage.selectEvent(eventName);
       claimPage.selectCurrency(currency);
       claimPage.clickSubmit();
+      claimPage.addExpense(expenseType);
 
       // cy.get('.oxd-toast-content').should('contain.text', 'Successfully Submitted');
 
