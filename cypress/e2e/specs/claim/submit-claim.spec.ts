@@ -58,6 +58,7 @@ describe('Employee Creation and Login', () => {
       claimPage.selectCurrency(currency);
       claimPage.clickSubmit();
       claimPage.addExpense(expenseType);
+      claimPage.clickSubmitButton();
 
       // cy.get('.oxd-toast-content').should('contain.text', 'Successfully Submitted');
 

@@ -132,6 +132,10 @@ class ClaimPage {
     cy.get(`button[type='submit']`).eq(0).contains("Save").click();
     return this;
   }
+
+   clickSubmitButton() {
+    cy.get("button").contains("Submit").eq(0).click()
+  }
 }
 
 export default ClaimPage;
