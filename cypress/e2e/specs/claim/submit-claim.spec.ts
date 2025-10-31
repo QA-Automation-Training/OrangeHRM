@@ -60,6 +60,7 @@ describe('Employee Creation and Login', () => {
       claimPage.addExpense(expenseType);
       claimPage.clickSubmitButton();
 
+
       // cy.get('.oxd-toast-content').should('contain.text', 'Successfully Submitted');
 
       claimPage.navigateToCreateClaim();
