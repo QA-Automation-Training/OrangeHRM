@@ -7,5 +7,5 @@ export interface IEmployeeInfo {
   empNumber: number;
   userName: string;
   password: string;
-  status: boolean; // Changed from 'true' to 'boolean'
+  status: boolean; 
 }

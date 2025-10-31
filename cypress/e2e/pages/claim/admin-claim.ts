@@ -1,41 +1,34 @@
 class ClaimPageAdmin {
     elements = {
         EmployeeNameInput: () =>
-            cy
-                .get('label')
-                .contains('Employee Name')
-                .closest('oxd-input-group')
-                .find('input'),
+            cy.contains('label', 'Employee Name')
+                .closest('.oxd-input-group')
+                .find('input[placeholder="Type for hints..."]'),
 
         statusDropdown: () =>
-            cy.get('label').contains('Status')
+            cy.contains('label', 'Status')
                 .closest('.oxd-input-group')
                 .find('.oxd-select-wrapper'),
-
         statusDropdownOptions: () =>
             cy.get('.oxd-select-dropdown [role="option"]'),
-
         searchButton: () =>
             cy.get('.oxd-form-actions').find('button[type="submit"]'),
-
-        VeiweDetailesButton: () =>
-            cy
-                .get('button.oxd-button--text')
-                .contains('View Details'),
-
-
-
+        viewDetailsButton: () =>
+            cy.get('button.oxd-button--text').contains('View Details'),
+        approveButton: () =>
+            cy.contains('button', 'Approve'),
     };
 
-    navigateToPendingClaims(): this {
+    navigateToViewAssignClaim(): this {
         cy.visit('/web/index.php/claim/viewAssignClaim');
-        cy.wait(2000);
-        cy.url().should('include', '/claim/pendingClaims');
+        cy.url().should('include', '/claim/viewAssignClaim');
         return this;
     }
 
     filterByEmployee(name: string): this {
-        this.elements.EmployeeNameInput().type(name);
+        this.elements.EmployeeNameInput()
+            .clear()
+            .type(name, { delay: 100 });
         return this;
     }
 
@@ -43,55 +36,63 @@ class ClaimPageAdmin {
         this.elements.statusDropdown().click();
         this.elements.statusDropdownOptions().contains(status).click();
         return this;
-
     }
 
     clickSearch(): this {
         this.elements.searchButton().click();
-        cy.wait(2000);
+        cy.get('.oxd-table-card', { timeout: 10000 }).should('be.visible');
         return this;
     }
 
-    clickVeiweDetailesButton(): this {
-        this.elements.VeiweDetailesButton().click();
+    clickViewDetailsButton(): this {
+        this.elements.viewDetailsButton().click();
+        cy.url().should('include', '/claim/submitClaim/id/');
         return this;
     }
 
+    clickApproveButton(): this {
+        this.elements.approveButton()
+            .should('be.visible')
+            .should('not.be.disabled')
+            .click();
 
+        cy.get('.oxd-toast', { timeout: 10000 }).should('be.visible');
+        return this;
+    }
 
-    openClaimDetailsForEmployee(name: string, status: string): this {
-        this.filterByEmployee(name)
+    openClaimDetailsForEmployee(fullName: string, status: string = 'Submitted'): this {
+        this.filterByEmployee(fullName)
             .filterByStatus(status)
             .clickSearch();
 
-        // Wait for the table to appear
-        cy.get('.oxd-table-card').should('be.visible');
+        cy.get('.oxd-table-card', { timeout: 20000 }).should('be.visible');
 
-        // Add log for debugging assistance
-        cy.log(`Opening claim details for employee: ${name}`);
-
-        // Find the row containing the employee name and click View Details
-        cy.contains('.oxd-table-cell', name)
-            .should('be.visible')
-            .closest('.oxd-table-card')
-            .within(() => {
-                cy.contains('button', 'View Details')
-                    .should('be.visible')
-                    .should('not.be.disabled')
-                    .click();
-                cy.wait(2000);
-                cy.url().should('include', '/claim/submitClaim/id/');
+        cy.get('.oxd-table-card').then(($rows) => {
+            const rowCount = $rows.length;
+            
+            for (let i = 0; i < 3; i++) {
+                cy.get('.oxd-table-card').eq(i)
+                    .find('button.oxd-button--text')
+                    .contains('View Details')
+                    .click();                
                 cy.contains('button', 'Approve')
-                    .should('exist')
                     .should('be.visible')
-                    .should('not.be.disabled')
                     .click();
-            });
+
+                cy.get('.oxd-toast', { timeout: 10000 }).should('be.visible');
+                
+                this.navigateToViewAssignClaim();
+                
+                if (i < rowCount - 1) {
+                    this.filterByEmployee(fullName)
+                        .filterByStatus(status)
+                        .clickSearch();
+                }
+            }
+        });
+
         return this;
     }
-
-
-
 }
 
 export default ClaimPageAdmin;

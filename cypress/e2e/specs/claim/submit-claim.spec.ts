@@ -2,6 +2,7 @@
 import { APIsHelpers } from 'cypress/support/helpers/api-helpers';
 import { IEmployeeInfo } from 'cypress/support/types/employee';
 import ClaimPage from 'cypress/e2e/pages/claim/employee-claim';
+import ClaimPageAdmin from '@pages/claim/admin-claim';
 
 describe('Employee Creation and Login', () => {
   let employeeCredentials: { username: string; password: string };
@@ -9,8 +10,11 @@ describe('Employee Creation and Login', () => {
   let currencyData: { currencies: string[] };
   let eventData: { events: string[] };
   let expenseTypeData: { expenseTypes: string[] };
+  let employeeFullName: string;
+
 
   const claimPage = new ClaimPage();
+  const claimPageAdmin = new ClaimPageAdmin();
 
   before(() => {
     cy.fixture('claim/currency-options.json').then((currencyInfo) => {
@@ -30,15 +34,17 @@ describe('Employee Creation and Login', () => {
     cy.loginToOrangeHRM();
 
     const employeeData = APIsHelpers.generateEmployeeData();
+    employeeFullName = employeeData.firstName;
+    cy.log(employeeFullName + 'from spec');
 
     return APIsHelpers.createEmployeeAndLogin(employeeData).then((result) => {
       employeeCredentials = result.credentials;
-      employeeInfo = result.employeeInfo;
-
       cy.logout();
       cy.loginToOrangeHRM(employeeCredentials.username, employeeCredentials.password);
 
       cy.url().should('include', '/dashboard');
+
+
     });
   });
 
@@ -60,11 +66,22 @@ describe('Employee Creation and Login', () => {
       claimPage.addExpense(expenseType);
       claimPage.clickSubmitButton();
 
-
       // cy.get('.oxd-toast-content').should('contain.text', 'Successfully Submitted');
 
       claimPage.navigateToCreateClaim();
+
+
+
     });
+    cy.logout();
+
+    cy.loginToOrangeHRM('admin', 'admin123');
+    cy.url().should('include', '/dashboard');
+
+    claimPageAdmin.navigateToViewAssignClaim();
+
+
+    claimPageAdmin.openClaimDetailsForEmployee(employeeFullName);
   });
 
   afterEach(() => {
