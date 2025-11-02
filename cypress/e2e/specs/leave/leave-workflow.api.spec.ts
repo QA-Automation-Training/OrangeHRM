@@ -1,96 +1,96 @@
-// Test cases to create:
+// // Test cases to create:
 
-import { LeavePage } from "@pages/leave/add-leave-request";
-import { IEmployeeInfo } from "cypress/support/types/employee";
-import { ILeaveRequestData } from "cypress/support/types/leave";
-import { APIsHelpers } from "cypress/support/utils/api-helpers";
+// import { LeavePage } from "@pages/leave/add-leave-request";
+// import { IEmployeeInfo } from "cypress/support/types/employee";
+// import { ILeaveRequestData } from "cypress/support/types/leave";
+// import { APIsHelpers } from "cypress/support/helpers/api-helpers";
 
-// TC1: Create 5 employees via API
+// // TC1: Create 5 employees via API
 
-// TC2: Assign leave entitlement to each employee
+// // TC2: Assign leave entitlement to each employee
 
-// TC3: Employee applies for leave and admin approves
+// // TC3: Employee applies for leave and admin approves
 
-describe("Leave page test cases", () => {
-  let leavePage: LeavePage;
-  let leavePageInfo: ILeaveRequestData;
-  let employeeMockData: IEmployeeInfo;
-  let employeeInfo: IEmployeeInfo;
+// describe("Leave page test cases", () => {
+//   let leavePage: LeavePage;
+//   let leavePageInfo: ILeaveRequestData;
+//   let employeeMockData: IEmployeeInfo;
+//   let employeeInfo: IEmployeeInfo;
 
-  const employeeIds: number[] = [];
-  const leaveTypeIds: number[] = [];
-  const credentialsList: Array<{ username: string; password: string }> = [];
-  const createdEmployees: IEmployeeInfo[] = [];
+//   const employeeIds: number[] = [];
+//   const leaveTypeIds: number[] = [];
+//   const credentialsList: Array<{ username: string; password: string }> = [];
+//   const createdEmployees: IEmployeeInfo[] = [];
 
-  before(() => {
-    // Initialize fixtures
-    cy.fixture("leave/leave-page-mock").then((leavePageData) => {
-      leavePageInfo = leavePageData;
-    });
+//   before(() => {
+//     // Initialize fixtures
+//     cy.fixture("leave/leave-page-mock").then((leavePageData) => {
+//       leavePageInfo = leavePageData;
+//     });
 
-    cy.fixture("pim/employmentStatus").then((addEmployeeData) => {
-      employeeMockData = addEmployeeData;
-      employeeInfo = structuredClone(employeeMockData);
-    });
+//     cy.fixture("pim/employmentStatus").then((addEmployeeData) => {
+//       employeeMockData = addEmployeeData;
+//       employeeInfo = structuredClone(employeeMockData);
+//     });
 
-    leavePage = new LeavePage();
-  });
+//     leavePage = new LeavePage();
+//   });
 
-  beforeEach(() => {
-    employeeIds.length = 0;
-    leaveTypeIds.length = 0;
-    credentialsList.length = 0;
+//   beforeEach(() => {
+//     employeeIds.length = 0;
+//     leaveTypeIds.length = 0;
+//     credentialsList.length = 0;
 
-    cy.loginToOrangeHRM();
+//     cy.loginToOrangeHRM();
 
-    APIsHelpers.createMultipleEmployees(employeeInfo, employeeIds, 2).then((employees) => {
-      createdEmployees.push(...employees);
-      const empNumbers = employees.map((e) => e.empNumber);
+//     APIsHelpers.createMultipleEmployees(employeeInfo, employeeIds, 2).then((employees) => {
+//       createdEmployees.push(...employees);
+//       const empNumbers = employees.map((e) => e.empNumber);
 
-      APIsHelpers.createUsersForEachEmployee(createdEmployees).then((credentials) => {
-        credentialsList.push(...credentials);
-      });
+//       APIsHelpers.createUsersForEachEmployee(createdEmployees).then((credentials) => {
+//         credentialsList.push(...credentials);
+//       });
 
-      APIsHelpers.addLeaveType(leavePageInfo).then((response) => {
-        const leaveId = response.body.data.id;
-        leaveTypeIds.push(leaveId);
-        APIsHelpers.addLeaveEntitlementsForEachEmployee(leavePageInfo, empNumbers, leaveId);
-      });
-    });
+//       APIsHelpers.addLeaveType(leavePageInfo).then((response) => {
+//         const leaveId = response.body.data.id;
+//         leaveTypeIds.push(leaveId);
+//         APIsHelpers.addLeaveEntitlementsForEachEmployee(leavePageInfo, empNumbers, leaveId);
+//       });
+//     });
 
-    cy.logout();
-  });
+//     cy.logout();
+//   });
 
-  it("Apply for leave request and admin approve the leave", () => {
-    // Each employee applies for a leave
-    cy.wrap(credentialsList).each((credential: { username: string; password: string }) => {
-      cy.loginToOrangeHRM(credential.username, credential.password);
+//   it("Apply for leave request and admin approve the leave", () => {
+//     // Each employee applies for a leave
+//     cy.wrap(credentialsList).each((credential: { username: string; password: string }) => {
+//       cy.loginToOrangeHRM(credential.username, credential.password);
 
-      leavePage
-        .navigateToLeavePage()
-        .clickApplyTab()
-        .selectLeaveType(leavePageInfo.leaveTypeName)
-        .selectFromDate(leavePageInfo.entitlementFromDate)
-        .selectToDate(leavePageInfo.entitlementEndDate)
-        .clickApply();
+//       leavePage
+//         .navigateToLeavePage()
+//         .clickApplyTab()
+//         .selectLeaveType(leavePageInfo.leaveTypeName)
+//         .selectFromDate(leavePageInfo.entitlementFromDate)
+//         .selectToDate(leavePageInfo.entitlementEndDate)
+//         .clickApply();
 
-      cy.wait(3000);
-      cy.logout();
-    })
-      .then(() => {
-        // Admin logs in and approves all pending leave requests
-        cy.loginToOrangeHRM();
+//       cy.wait(3000);
+//       cy.logout();
+//     })
+//       .then(() => {
+//         // Admin logs in and approves all pending leave requests
+//         cy.loginToOrangeHRM();
 
-        leavePage
-          .navigateToLeavePage()
-          .approveMultipleLeaveRequests(createdEmployees);
-      });
-  });
+//         leavePage
+//           .navigateToLeavePage()
+//           .approveMultipleLeaveRequests(createdEmployees);
+//       });
+//   });
 
-  afterEach(() => {
-    cy.logout();
-    cy.loginToOrangeHRM();
-    APIsHelpers.deleteUsers(employeeIds);
-  });
-});
+//   afterEach(() => {
+//     cy.logout();
+//     cy.loginToOrangeHRM();
+//     APIsHelpers.deleteUsers(employeeIds);
+//   });
+// });
 

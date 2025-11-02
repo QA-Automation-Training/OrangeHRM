@@ -7,10 +7,11 @@ export enum UserRole {
 }
 
 class PIMInitializer {
-  /**
-   * initializer for create employee payload
-   * @param {IEmployeeInfo} employeeData
-   * @returns
+/**
+   * Creates and returns a formatted payload for employee creation API request
+   * Uses faker library to generate random realistic data for testing
+   * @param {IEmployeeInfo} employeeData - Basic employee information
+   * @returns {Object} Formatted payload ready for API consumption
    */
   static initializerEmployeePayload(employeeData: IEmployeeInfo) {
     const payload = {
@@ -22,10 +23,11 @@ class PIMInitializer {
     return payload;
   }
 
-  /**
-   * initializer for create user payload
-   * @param {IEmployeeInfo} employeeData
-   * @returns
+   /**
+   * Creates and returns a formatted payload for user account creation API request
+   * Generates secure credentials and assigns appropriate user role
+   * @param {IEmployeeInfo} employeeData - Basic employee information
+   * @returns {Object} Formatted user payload with credentials and role
    */
   static initializerUserPayload(employeeData: IEmployeeInfo) {
     const payload = {

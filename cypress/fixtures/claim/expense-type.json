@@ -1,0 +1,8 @@
+{
+    "expenseTypes": [
+        "Accommodation",
+        "Fuel Allowance",
+        "Planned Surgery",
+        "Transport"
+    ]
+}

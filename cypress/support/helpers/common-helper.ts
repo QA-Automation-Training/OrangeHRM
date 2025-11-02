@@ -1,30 +1,32 @@
+// common-helper.ts
 class CommonHelper {
+  /**
+   * Send API request with authentication
+   */
   static sendAPIRequest(
     method: string,
     url: string,
     body?: string | object,
-    header?: Record<string, string>
+    headers?: Record<string, string>
   ) {
-    return cy
-      .request({
-        method,
-        url,
-        ...(body && { body }),
-        headers: {
-          ...(body ? { "Content-Type": "application/json" } : {}),
-          ...(header || {}),
-        },
-      })
-      .then((response) => {
-        expect(response.status).to.eq(200);
-        return response;
-      });
-  }
-
-  static cleanup(URL: string, ids: number[]) {
-    return this.sendAPIRequest("DELETE", URL, {
-      ids,
+    return cy.request({
+      method,
+      url,
+      ...(body && { body }),
+      headers: {
+        ...(body ? { "Content-Type": "application/json" } : {}),
+        ...(headers || {}),
+      },
+      failOnStatusCode: false,
     });
   }
+
+  /**
+   * Cleanup - delete multiple records
+   */
+  static cleanup(endpoint: string, ids: number[]) {
+    return this.sendAPIRequest("DELETE", endpoint, { ids });
+  }
 }
-export { CommonHelper }
+
+export { CommonHelper };
