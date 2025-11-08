@@ -17,6 +17,11 @@ class ClaimPageAdmin {
             cy.get('button.oxd-button--text').contains('View Details'),
         approveButton: () =>
             cy.contains('button', 'Approve'),
+        rejectButton: () =>
+            cy.contains('button', 'Reject'),
+
+        genericButton: (label: string) =>
+            cy.get('button').contains(label)
     };
 
     navigateToViewAssignClaim(): this {
@@ -69,20 +74,20 @@ class ClaimPageAdmin {
 
         cy.get('.oxd-table-card').then(($rows) => {
             const rowCount = $rows.length;
-            
+
             for (let i = 0; i < 3; i++) {
                 cy.get('.oxd-table-card').eq(i)
                     .find('button.oxd-button--text')
                     .contains('View Details')
-                    .click();                
+                    .click();
                 cy.contains('button', 'Approve')
                     .should('be.visible')
                     .click();
 
                 cy.get('.oxd-toast', { timeout: 10000 }).should('be.visible');
-                
+
                 this.navigateToViewAssignClaim();
-                
+
                 if (i < rowCount - 1) {
                     this.filterByEmployee(fullName)
                         .filterByStatus(status)
@@ -92,6 +97,22 @@ class ClaimPageAdmin {
         });
 
         return this;
+    }
+
+    clickButton(label: string): this {
+        this.elements.genericButton(label)
+            .should('be.visible')
+            .click();
+
+        return this;
+    }
+
+    clickApprove(): this {
+        return this.clickButton('Approve');
+    }
+
+    clickReject(): this {
+        return this.clickButton('Reject');
     }
 }
 

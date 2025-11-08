@@ -43,8 +43,6 @@ describe('Employee Creation and Login', () => {
       cy.loginToOrangeHRM(employeeCredentials.username, employeeCredentials.password);
 
       cy.url().should('include', '/dashboard');
-
-
     });
   });
 
@@ -75,7 +73,7 @@ describe('Employee Creation and Login', () => {
     });
     cy.logout();
 
-    cy.loginToOrangeHRM('admin', 'admin123');
+    cy.loginToOrangeHRM();
     cy.url().should('include', '/dashboard');
 
     claimPageAdmin.navigateToViewAssignClaim();
@@ -84,10 +82,38 @@ describe('Employee Creation and Login', () => {
     claimPageAdmin.openClaimDetailsForEmployee(employeeFullName);
   });
 
+  const action = [
+    { status: "Approve", clickAction: () => claimPageAdmin.clickApprove() },
+    { status: "Reject", clickAction: () => claimPageAdmin.clickReject() }
+  ]
+  action.forEach(({ status, clickAction }) => {
+    it.only(`employee submits claim and admin ${status}s it`, () => {
+      const eventName: string = 'Medical Reimbursement';
+
+      claimPage.navigateToCreateClaim();
+      const expenseType = expenseTypeData.expenseTypes[0];
+
+      claimPage.selectEvent(eventName);
+      claimPage.selectCurrency(currencyData.currencies[0]);
+      claimPage.clickSubmit();
+      claimPage.addExpense(expenseType);
+      claimPage.clickSubmitButton();
+
+      cy.logout();
+      cy.loginToOrangeHRM();
+      cy.url().should('include', '/dashboard');
+
+      claimPageAdmin.navigateToViewAssignClaim();
+      claimPageAdmin.openClaimDetailsForEmployee(employeeFullName);
+
+      clickAction();
+    });
+  });
+
   afterEach(() => {
     if (employeeInfo && employeeInfo.empNumber) {
       cy.visit('/web/index.php/auth/logout');
-      cy.loginToOrangeHRM('admin', 'admin123');
+      cy.loginToOrangeHRM();
 
       cy.then(() => {
         return APIsHelpers.deleteEmployees([employeeInfo.empNumber]);
