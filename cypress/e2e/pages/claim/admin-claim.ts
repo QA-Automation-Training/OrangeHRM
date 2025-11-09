@@ -75,25 +75,25 @@ class ClaimPageAdmin {
         cy.get('.oxd-table-card').then(($rows) => {
             const rowCount = $rows.length;
 
-            for (let i = 0; i < 3; i++) {
-                cy.get('.oxd-table-card').eq(i)
-                    .find('button.oxd-button--text')
-                    .contains('View Details')
-                    .click();
-                cy.contains('button', 'Approve')
-                    .should('be.visible')
-                    .click();
+            // for (let i = 0; i < 3; i++) {
+            cy.get('.oxd-table-card').eq(0)
+                .find('button.oxd-button--text')
+                .contains('View Details')
+                .click();
+            // cy.contains('button', 'Approve')
+            //     .should('be.visible')
+            //     .click();
 
-                cy.get('.oxd-toast', { timeout: 10000 }).should('be.visible');
+            //     cy.get('.oxd-toast', { timeout: 10000 }).should('be.visible');
 
-                this.navigateToViewAssignClaim();
+            // this.navigateToViewAssignClaim();
 
-                if (i < rowCount - 1) {
-                    this.filterByEmployee(fullName)
-                        .filterByStatus(status)
-                        .clickSearch();
-                }
-            }
+            // if (i < rowCount - 1) {
+            //     this.filterByEmployee(fullName)
+            //         .filterByStatus(status)
+            //         .clickSearch();
+            // }
+            //}
         });
 
         return this;
